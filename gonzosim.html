@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post-Gonzo Interview Simulator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+</head>
+<body>
+<script>
+let questions = [
+  "If your brain was a pizza, what toppings would it have?",
+  "Describe your nightmares using only animal sounds.",
+  "How would you archive chaos in a museum?",
+  "If Pikblod was a smell, what would it be?",
+  "Write a haiku about phones becoming gravestones.",
+  "Imagine you are six again, now tell me what you see.",
+  "What is the sound of a post-gonzo journalist sighing?",
+  "If the city was a giant green foot, what happens next?",
+  "Explain your favorite absurd accident as if it’s romantic.",
+  "Turn the collapse of language into a dance move.",
+  "What is the weirdest food you’ve ever imagined eating?",
+  "If your shadow had a mind of its own, what would it do?",
+  "Write a dialogue between a ghost and a smartphone.",
+  "How would you describe chaos using only colors?",
+  "Invent a new post-gonzo holiday and explain the rules.",
+  "If your thoughts were animals, which would roam free?",
+  "Explain a surreal accident using only sound effects.",
+  "What happens if time started flowing backwards?",
+  "Describe a love story between a cloud and a streetlamp.",
+  "If your feet could speak, what would they tell the world?",
+  "Invent a new dance inspired by collapsing language.",
+  "If the city became a living organism, what would it say?",
+  "Write a recipe for existential despair in 3 steps.",
+  "Imagine your dreams as postcards. What do they show?"
+];
+
+let activeQuestion;
+let userInput = "";
+let answerLog = [];
+
+function setup() {
+  createCanvas(800, 600);
+  textSize(24);
+  activeQuestion = random(questions);
+}
+
+function draw() {
+  background(0);
+  
+  // Display current question
+  fill(255);
+  textSize(24);
+  text(activeQuestion, 20, 50, width - 40);
+  
+  // Display user input box
+  fill(50);
+  rect(20, height-100, width-40, 50);
+  fill(255, 255, 0);
+  textSize(24);
+  text(userInput, 25, height-65);
+  
+  // Display previous answers
+  fill(0, 255, 0);
+  textSize(20);
+  let startY = 120;
+  for (let i = max(0, answerLog.length - 10); i < answerLog.length; i++) {
+    text(answerLog[i], 20, startY);
+    startY += 25;
+  }
+}
+
+function keyPressed() {
+  if (keyCode === BACKSPACE) {
+    userInput = userInput.substring(0, userInput.length-1);
+  } else if (keyCode === ENTER) {
+    // Save the answer
+    answerLog.push(userInput);
+    // Move to next question
+    activeQuestion = random(questions);
+    userInput = "";
+  } else if (key.length === 1) {
+    userInput += key;
+  }
+}
+</script>
+</body>
+</html>
