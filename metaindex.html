@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post-Gonzo Interview Simulator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+</head>
+<body>
+<script>
+let questions = [
+  "If your brain was a pizza, what toppings would it have?",
+  "Describe your nightmares using only animal sounds.",
+  "How would you archive chaos in a museum?",
+  "If Pikblod was a smell, what would it be?",
+  "Write a haiku about phones becoming gravestones.",
+  "Imagine you are six again, now tell me what you see.",
+  "What is the sound of a post-gonzo journalist sighing?",
+  "If the city was a giant green foot, what happens next?",
+  "Explain your favorite absurd accident as if it’s romantic.",
+  "Turn the collapse of language into a dance move."
+];
+
+let phrases = [
+  "SUPER-GONZO", "FUNERAL DONK", "INFERNO EGOISM",
+  "DEEP PERSONALITY", "GG_BL0MS10", "FRIED POOP REALITY"
+];
+
+let floatingTexts = [];
+let activeQuestion;
+let userInput = "";
+
+function setup() {
+  createCanvas(800, 600);
+  textSize(24);
+  activeQuestion = random(questions);
+  
+  for (let i = 0; i < 15; i++) {
+    floatingTexts.push({
+      text: random(phrases),
+      x: random(width),
+      y: random(height),
+      dx: random(-2,2),
+      dy: random(-2,2),
+      color: [random(50,255), random(50,255), random(50,255)]
+    });
+  }
+}
+
+function draw() {
+  background(0);
+  
+  // Draw floating phrases
+  for (let f of floatingTexts) {
+    f.x += f.dx;
+    f.y += f.dy;
+    
+    if (f.x < 0 || f.x > width) f.dx *= -1;
+    if (f.y < 0 || f.y > height) f.dy *= -1;
+    
+    fill(random(50,255), random(50,255), random(50,255));
+    textSize(random(16,24));
+    text(f.text, f.x, f.y);
+  }
+  
+  // Draw current question
+  fill(255);
+  textSize(24);
+  text(activeQuestion, 20, 50, width - 40); // wrap text
+  
+  // Draw user input box
+  fill(50);
+  rect(20, height-100, width-40, 50);
+  fill(255, 255, 0);
+  textSize(24);
+  text(userInput, 25, height-65);
+}
+
+// Handle keyboard input
+function keyPressed() {
+  if (keyCode === BACKSPACE) {
+    userInput = userInput.substring(0, userInput.length-1);
+  } else if (keyCode === ENTER) {
+    activeQuestion = random(questions);
+    userInput = "";
+  } else if (key.length === 1) {
+    userInput += key;
+  }
+}
+</script>
+</body>
+</html>
